@@ -32,3 +32,4 @@ sudo apt-get update && sudo apt-get install packer
 - terraform이랑 비슷
 - 인스턴스 띄우고, inline 쉘스크립트 실행되고, 필요한 앱들이 정상설치되고, ... 전체 실행 지켜봐야 됨
 - 템플릿을 여러 개 작성해놓고, 각 인스턴스를 동시에 병렬로 띄워서 테스트해보는 것이 요령이라면 요령
+- github action, CI/CD 도구 등등이 있지만, 결국 한참기다려야하는 건 같음!
