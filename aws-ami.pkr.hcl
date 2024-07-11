@@ -33,7 +33,7 @@ source "amazon-ebs" "example" {
 }
 
 build {
-  name    = "learn-packer-aws"
+  name = "learn-packer-aws"
   sources = [
     "source.amazon-ebs.example"
   ]

@@ -31,5 +31,19 @@ sudo apt-get update && sudo apt-get install packer
 
 - terraform이랑 비슷
 - 인스턴스 띄우고, inline 쉘스크립트 실행되고, 필요한 앱들이 정상설치되고, ... 전체 실행 지켜봐야 됨
+- syntax 정도는 `packer validate {템플릿}`으로 사전체크 가능
 - 템플릿을 여러 개 작성해놓고, 각 인스턴스를 동시에 병렬로 띄워서 테스트해보는 것이 요령이라면 요령
 - github action, CI/CD 도구 등등이 있지만, 결국 한참기다려야하는 건 같음!
+
+## 커맨드
+
+```sh
+# 초기화. packer 블록에 지정된 플러그인 다운로드
+packer init {template.pkr.hcl}
+
+# 템플릿 포맷 업데이트 (가독성, 일관성 개선)
+packer fmt {template.pkr.hcl}
+
+# syntax 및 구성 검증
+packer validate {template.pkr.hcl}
+```
