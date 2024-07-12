@@ -5,9 +5,13 @@ IaC 방식으로 EC2 이미지 만들기
 ## packer 용도
 
 - AWS AMI뿐만 아니라 Docker 이미지, VMware, VirtualBox, Google Cloud, Azure 등 여러 플랫폼에서 '이미지'라고 불리는 것들을 빌드(pack)할 수 있음
-- 당연히 그냥 각 플랫폼의 자체적인 빌드도구를 써도 상관없음
+- 당연히 그냥 각 플랫폼 자체 빌드도구를 써도 상관없음
 - 특히 docker 이미지는 자체 빌드도구가 강력하고 워낙 널리 쓰이기 때문에 packer 안쓰는게 더 좋아보이기도?
 - 이미지를 일관된&자주 쓰는 IaC 형식으로 관리하고자 할 때 packer가 유용한 것
+- packer는 이미지 빌드만 수행하고, 이후 관리는 관여치 않는다. 빌드 후 이미지 확인, 실행, 삭제 등은 각 개별 플랫폼에서 수행해야 한다.
+- packer로 이미지 빌드시, 해당 플랫폼이 사전설치되어야 할 수도 있음
+  - docker 이미지: docker 런타임 설치 필요
+  - AWS-ami: awscli는 없어도되고, credentials 필요
 
 ## install
 
@@ -39,11 +43,16 @@ sudo apt-get update && sudo apt-get install packer
 
 ```sh
 # 초기화. packer 블록에 지정된 플러그인 다운로드
-packer init {template.pkr.hcl}
+packer init template.pkr.hcl
 
-# 템플릿 포맷 업데이트 (가독성, 일관성 개선)
-packer fmt {template.pkr.hcl}
+# 템플릿 indent 업데이트 (가독성, 일관성 개선)
+packer fmt template.pkr.hcl
 
 # syntax 및 구성 검증
-packer validate {template.pkr.hcl}
+packer validate template.pkr.hcl
+```
+
+```sh
+# 빌드
+packer build template.pkr.hcl
 ```
