@@ -49,8 +49,11 @@ packer init template.pkr.hcl
 # 템플릿 indent 업데이트 (가독성, 일관성 개선)
 packer fmt template.pkr.hcl
 
-# syntax 및 구성 검증
+# syntax 및 설정 검증
 packer validate template.pkr.hcl
+
+# variables 할당, 메타데이터 검증
+packer inspect template.pkr.hcl
 ```
 
 ```sh

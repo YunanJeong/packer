@@ -17,6 +17,7 @@ source "docker" "ubuntu" {
 # build block: 실행된 후 Packer가 해당 이미지에 대해 수행해야 하는 작업 정의
 build {
   name = "learn-packer"
+  # source builder: Packer가 특정 환경에서 이미지 생성시 필요한 구성요소
   sources = [
     "source.docker.ubuntu"
   ]
