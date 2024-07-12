@@ -35,7 +35,7 @@ variable "tags" {
     Name    = "yunan-packer-test-{{timestamp}}"
     Owner   = env("TAG_OWNER")
     Service = env("TAG_SERVICE")
-    Packer = true
+    Packer  = true
   }
 }
 
@@ -44,7 +44,7 @@ source "amazon-ebs" "example" {
   // access_key = var.aws_access_key 
   // secret_key = var.aws_secret_key
   // region     = "ap-northeast-2"
-  // profile    = "default" # ~/.aws/credentials에서 프로필 선택
+  // profile    = "default" # ~/.aws/credentials에서 프로필 선택 명시
 
   # ami 생성을 위한 임시 인스턴스 설정
   source_ami    = var.ubuntu_22_lts.ami
