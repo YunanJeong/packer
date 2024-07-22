@@ -55,6 +55,14 @@ source "amazon-ebs" "example" {
   # 결과물 ami 설정 (참고: ami_name과 ami의 tag Name은 다른 개념)
   ami_name = "ami-${var.tags.Name}"
   tags     = var.tags
+
+  # 디스크 설정 (block_device_mappings 미설정시 default 용량 8GB)
+  block_device_mappings = {
+    device_name = "/dev/sda1"
+    volume_size = 30
+    volume_type = "gp2"
+    delete_on_termination = true
+  }
 }
 
 build {
