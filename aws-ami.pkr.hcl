@@ -61,14 +61,13 @@ source "amazon-ebs" "example" {
     device_name           = "/dev/sda1" # 필수입력 값
     volume_size           = 8           # GB단위. 미할당시 default 8GB
     volume_type           = "gp2"       # 미할당시 default
-    delete_on_termination = true        # 미할당시 default
+    delete_on_termination = true        # 미할당시 default false. terraform과 다르게 false가 default라 미설정하고 packer작업시 EBS 내역이 계속 쌓임 
   }
   # 최종 결과물 AMI의 EBS 설정 (미설정시 원본 AMI의 설정값을 따름)
   ami_block_device_mappings {
     device_name           = "/dev/sda1" # 필수입력 값
     volume_size           = 8           # 보통 8GB
     volume_type           = "gp2"
-    delete_on_termination = true
   }
 }
 
