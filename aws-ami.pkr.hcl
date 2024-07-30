@@ -16,7 +16,7 @@ variable "aws_secret_key" {
 }
 variable "ubuntu_22_lts" {
   default = {
-    ami  = "ami-063454de5fe8eba79"
+    ami  = "ami-04a81a99f5ec58529" # us-east-1  # "ami-063454de5fe8eba79" # ap-northeast-2
     user = "ubuntu"
   }
 }
@@ -56,18 +56,17 @@ source "amazon-ebs" "example" {
   ami_name = "ami-${var.tags.Name}"
   tags     = var.tags
 
-  # 임시 인스턴스 EBS 설정 (미설정시 default)
+  # 임시 인스턴스 볼륨 설정 (미설정시 default)
   launch_block_device_mappings {
     device_name           = "/dev/sda1" # 필수입력 값
-    volume_size           = 8           # GB단위. 미할당시 default 8GB # 넉넉하게 잡아야함
+    volume_size           = 8           # GB단위. 미할당시 default 8GB # 첫 작업시 넉넉하게 잡되, 결과물 확인후 최적화재작업하여 줄이면 좋음
     volume_type           = "gp2"       # 미할당시 default
     delete_on_termination = true        # 미할당시 default false. terraform과 다르게 false가 default라 미설정하고 packer작업시 EBS 내역이 계속 쌓임 
   }
-  # 최종 결과물 AMI의 EBS 설정 (미설정시 원본 AMI의 설정값을 따름)
+  # 최종 결과물 AMI의 볼륨 설정 (미설정시 원본 AMI의 설정값을 따름)
   ami_block_device_mappings {
     device_name = "/dev/sda1" # 필수입력 값
-    volume_size = 8           # 보통 8GB # 처음에 넉넉하게 잡고, 결과확인 후 최적화 재작업
-    volume_type = "gp2"
+    volume_type = "gp3" # launch에서 사용한 볼륨을 그대로 가져오되, gp3로 변경 (사이즈 변경 같은건 안됨) 
   }
 }
 
@@ -95,7 +94,7 @@ build {
       "sudo systemctl start nginx",
 
       # 불필요 파일 삭제
-      "pip cache purge", # pip3 cache dir, pip cache dir로 캐시경로 확인가능
+      # "pip cache purge", # pip3 cache dir, pip cache dir로 파이썬 캐시경로 확인가능
       "sudo apt clean  ;  sudo rm -rf ~/.cache  ;  sudo rm -rf /tmp/*",
     ]
   }
