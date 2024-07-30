@@ -59,7 +59,7 @@ source "amazon-ebs" "example" {
   # 임시 인스턴스 볼륨 설정 (미설정시 default)
   launch_block_device_mappings {
     device_name           = "/dev/sda1" # 필수입력 값
-    volume_size           = 8           # GB단위. 미할당시 default 8GB # 첫 작업시 넉넉하게 잡되, 결과물 확인후 최적화재작업하여 줄이면 좋음
+    volume_size           = 8           # GB. 미할당시 default 8GB # ami의 기본 볼륨으로 그대로 적용됨 # 첫 작업시 넉넉하게 잡되, 결과물 확인후 최적화
     volume_type           = "gp2"       # 미할당시 default
     delete_on_termination = true        # 미할당시 default false. terraform과 다르게 false가 default라 미설정하고 packer작업시 EBS 내역이 계속 쌓임 
   }
