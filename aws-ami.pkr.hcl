@@ -65,9 +65,9 @@ source "amazon-ebs" "example" {
   }
   # 최종 결과물 AMI의 EBS 설정 (미설정시 원본 AMI의 설정값을 따름)
   ami_block_device_mappings {
-    device_name           = "/dev/sda1" # 필수입력 값
-    volume_size           = 8           # 보통 8GB # 처음에 넉넉하게 잡고, 결과확인 후 최적화
-    volume_type           = "gp2"
+    device_name = "/dev/sda1" # 필수입력 값
+    volume_size = 8           # 보통 8GB # 처음에 넉넉하게 잡고, 결과확인 후 최적화 재작업
+    volume_type = "gp2"
   }
 }
 
@@ -84,11 +84,15 @@ build {
   # 이미지에 포함될 앱 설치 & 서비스 실행 등 설정
   # packer ami 빌드절차: 임시 인스턴스 실행=>프로비저닝 스크립트 실행=>임시 인스턴스 종료=>이미지 생성
   provisioner "shell" {
+
+    # 해당 provisioner 작업동안 유지되는 환경변수 
+    environment_vars = ["MY_ENV_VAR=val"] # export는 쉘세션동안만 유지되는데, 이건 inline 내부 sh파일 실행 중에도 반영됨 
+
     inline = [
       "sudo apt-get update -y",
       "sudo apt-get install -y nginx",
       "sudo systemctl enable nginx",
-      "sudo systemctl start nginx"
+      "sudo systemctl start nginx",
 
       # 불필요 파일 삭제
       "pip cache purge", # pip3 cache dir, pip cache dir로 캐시경로 확인가능
