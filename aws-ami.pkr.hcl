@@ -89,6 +89,10 @@ build {
       "sudo apt-get install -y nginx",
       "sudo systemctl enable nginx",
       "sudo systemctl start nginx"
+
+      # 불필요 파일 삭제
+      "pip cache purge", # pip3 cache dir, pip cache dir로 캐시경로 확인가능
+      "sudo apt clean && sudo rm -rf ~/.cache && sudo rm -rf /tmp/*"
     ]
   }
 }
